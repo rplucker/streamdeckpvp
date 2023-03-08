@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>com.github.rplucker.streamdeckpvp.clearlayer</title>
+    <link rel="stylesheet" href="sdpi.css">
+    <script src="../js/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="sdpi-wrapper">
+        <!-- import global config options -->
+        <div id="global-config"></div>
+
+        <!-- All pi specific options should live within this div. Div needs the id of pi-specific-options to be shown/hidden accordingly -->
+        <div type="select", class="sdpi-item" style="display:none" id="pi-specific-options">
+            <div class="sdpi-item-label" >Layer to Clear</div>
+            <select id="layer-dropdown" class="sdpi-item-value select setvalueSelect" onchange="layerDropdownChanged()" style="max-width: 163px;">
+                <option value="none-layer-select">-none-</option>
+                <!-- populate values here in code below -->
+            </select>
+
+            <Button onclick="refreshButtonClicked()">Refresh</Button>
+        </div>       
+    </div> <!-- Closing div -->
+</body>
+
+
+<script>
+
+//this function should exist in every PI window & should contain the "deviceDropdownSelected" key.
+//Other keys beyond that are specific to each pi
+function createAppSettingsAndSave(){
+    payload = {
+        "deviceDropdownSelected": $("#device-dropdown").val(),
+        "layerDropdownSelected": $("#layer-dropdown").val()
+    }
+
+    //save settings
+    sendToElgatoEvents.setSettings(payload);
+}
+
+function test(){
+    $("#layer-dropdown").val(actionSettings.layerDropdownSelected);
+}
+
+//device dropdown has changed. Style accordingly and save settings.
+function deviceDropdownChanged(){
+    styleDeviceDropdown();
+    createAppSettingsAndSave();
+
+    if (!deviceConstantOptionValues.includes($("#device-dropdown").val())){
+        formatLayerSelect()
+        .then(resolve => {
+            $("#layer-dropdown").val(actionSettings.layerDropdownSelected);
+        });
+    }
+}
+
+// property inspector appeared. select the correct cue that was previously used
+window.addEventListener("propertyInspectorConnectedEvent", (event) => {
+
+    if (!deviceConstantOptionValues.includes($("#device-dropdown").val())){
+        formatLayerSelect()
+        .then(resolve => {
+            $("#layer-dropdown").val(actionSettings.layerDropdownSelected);
+        });
+    }
+})
+
+function layerDropdownChanged() {
+    createAppSettingsAndSave();
+}
+
+//remove all options in layer select aside from none, add them back. Only call if a device is selected otherwise it will fail.
+function formatLayerSelect(){
+    console.log("Formatting layer select");
+    constantOptionValues = ["none-layer-select"];
+
+    //remove all options aside from none-layer-select
+    $("#layer-dropdown option").each(function(index){
+        if (!constantOptionValues.includes($(this).val())){
+            this.remove();
+        }
+    })
+
+    //get ip & port number from selected device
+    selectedDevice = $("#device-dropdown").val();
+
+    ipPort = selectedDevice.split("_")[1]
+    ipAddr = ipPort.split(":")[0]
+    portNumber = ipPort.split(":")[1]
+
+    //populate layer dropdown
+    return new Promise(function(resolve, rejcect){
+        sendToPVP.getLayers(ip=ipAddr, port=portNumber)
+        .then(function(PVPresult){
+            
+            for(let i=0; i < PVPresult.data.length; i++){
+                let option = $("<option />",
+                {
+                    value: PVPresult.data[i].layer.uuid,
+                    text: PVPresult.data[i].layer.name
+                })
+                
+                $("#layer-dropdown").append(option);               
+            }
+            resolve();
+        })   
+    })
+}
+
+function refreshButtonClicked(){
+    formatLayerSelect()
+    .then(resolve =>{
+
+    if (!deviceConstantOptionValues.includes($("#device-dropdown").val())){
+        formatLayerSelect()
+        .then(resolve => {
+            $("#layer-dropdown").val(actionSettings.layerDropdownSelected);
+        });
+    }
+    });
+}
+
+</script>
+
+<script src="../js/PropertyInspectorBase.js"></script>
+
+</html>

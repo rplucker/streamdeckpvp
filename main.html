@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>com.github.rplucker.streamdeckpvp</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <script>
+        ws = null;
+
+        var pluginContext = null;
+        var globalSettings = null;
+
+        var DestinationEnum = Object.freeze({ "HARDWARE_AND_SOFTWARE": 0, "HARDWARE_ONLY": 1, "SOFTWARE_ONLY": 2 })
+        var desiredGlobalTarget = DestinationEnum.HARDWARE_AND_SOFTWARE;
+      
+        var Utilities = {
+            pluginContextHasBeenSet: function(){
+                if (pluginContext == null){
+                    return false
+                }
+                return true
+            },
+            
+            pluginSettingsHasBeenSet: function(){
+                if (pluginSettings == null){
+                    return false
+                }
+                return true
+            },
+
+            //pluginContext should not change. Set it then freeze it.
+            setPluginContext: function(context){
+                console.log("Setting plugin context");
+                pluginContext = Object.freeze(context);
+            }
+        }
+
+        var receivedEvents = {   
+            keyDown: function(context, settings, coordinates){
+            },
+
+            keyUp: function(context, settings, coordinates, action, payload){            
+                try {
+                    ipPort = settings.deviceDropdownSelected.split("_")[1];
+                    ipAddr = ipPort.split(":")[0];
+                    portNumber = ipPort.split(":")[1];
+                }
+                catch(TypeError){
+                    console.log("either none or add new was selected.")
+                    return
+                }
+                console.log(action);
+                switch(action){
+                    case "com.github.rplucker.streamdeckpvp.triggercue":
+                        playlistUUID = settings.cueDropdownSelected.split("_")[0];
+                        cueUUID = settings.cueDropdownSelected.split("_")[1];
+
+                        PVP.triggerCueByUUID(ipAddr = ipAddr, port = portNumber, playlistUUID = playlistUUID, cueUUID = cueUUID);
+                        break;
+
+                    case "com.github.rplucker.streamdeckpvp.clearall":
+                        PVP.clearAll(ipAddr = ipAddr, port = portNumber);
+                        break;
+
+                    case "com.github.rplucker.streamdeckpvp.clearlayer":
+                        layerUUID = settings.layerDropdownSelected
+                        PVP.clearLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.mutemaster":
+                        PVP.muteMaster(ipAddr=ipAddr, port=portNumber);
+                        break;
+
+                    case "com.github.rplucker.streamdeckpvp.mutelayer":
+                        layerUUID = settings.layerDropdownSelected
+                        PVP.muteLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.unmutemaster":
+                        PVP.ummuteMaster(ipAddr=ipAddr, port=portNumber)
+                        break;
+
+                    case "com.github.rplucker.streamdeckpvp.unmutelayer":
+                        layerUUID = settings.layerDropdownSelected
+                        PVP.unmuteLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.hidemaster":
+                        PVP.hideMaster(ipAddr=ipAddr, port=portNumber);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.hidelayer":
+                        layerUUID = settings.layerDropdownSelected
+                        PVP.hideLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.unhidemaster":
+                        PVP.unhideMaster(ipAddr=ipAddr, port=portNumber);
+                        break;
+                    
+                    case "com.github.rplucker.streamdeckpvp.unhidelayer":
+                        layerUUID = settings.layerDropdownSelected
+                        PVP.unhideLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID)
+                        break;
+                }
+            },
+            
+            //When action is displayed on stream deck. Ex when it's plugged in or folder containing action is entered
+            willAppear: function(context, settings, coordinates){
+            },
+
+            didReceiveGlobalSettings: function(settings){
+                console.log("Got new plugin settings");
+                globalSettings = settings;
+            }
+        }
+
+        var sendToElgatoEvents = {
+            sendToPropertyInspector: function(action, context, payload){
+                console.log("Sending message to property inspector");
+
+                json = {
+                    "action": action,
+                    "event": "sendToPropertyInspector",
+                    "context": context,
+                    "payload": payload
+                }
+                ws.send(JSON.stringify(json));
+            },
+
+            //only sends request to receive data
+            getGlobalSettings: function(callback){
+                console.log("getting global settings");
+
+                if (!Utilities.pluginContextHasBeenSet()){
+                    console.error("getGlobalSettings called but plugin context has not been set yet.");
+                }
+
+                json = {
+                    "event": "getGlobalSettings",
+                    context: pluginContext
+                }
+                ws.send(JSON.stringify(json));
+            },
+            
+            setGlobalSettings: function(payload){  
+                console.log("setting global settings");
+                
+                json = {
+                    "event": "setGlobalSettings",
+                    "context": pluginContext,
+                    "payload": payload
+                }
+                ws.send(JSON.stringify(json));
+            },
+
+            setTitle: function(context, title, state=0){
+                json = {
+                    "event": "setTitle",
+                    "context": context,
+                    "payload": {
+                        "title": title,
+                        "target": desiredGlobalTarget,
+                        "state": state
+                    }
+                }
+                ws.send(JSON.stringify(json));
+            }
+        }
+
+
+        var PVP = {
+            triggerCueByUUID : function(ipAddr, port, playlistUUID, cueUUID){
+                console.log("triggerCueByUUID: sending request");
+                
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/trigger/playlist/${playlistUUID}/cue/${cueUUID}`);
+                xhr.send();
+            },
+
+            clearAll : function(ipAddr, port){
+                console.log("clearAll: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/clear/workspace`)
+                xhr.send();
+            },
+
+            clearLayer : function(ipAddr, port, layerUUID){
+                console.log("clearLayer: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/clear/layer/${layerUUID}`)
+                xhr.send();
+            },
+
+            muteMaster : function(ipAddr, port){
+                console.log("muteAll: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/mute/workspace`)
+                xhr.send();
+            },
+
+            muteLayer : function(ipAddr, port, layerUUID){
+                console.log("muteLayer: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/mute/layer/${layerUUID}`)
+                xhr.send();
+            },
+
+            ummuteMaster : function(ipAddr, port){
+                console.log("unmuteAll: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/unmute/workspace`)
+                xhr.send();
+            },
+
+            unmuteLayer : function(ipAddr, port, layerUUID){
+                console.log("unmuteLayer: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/unmute/layer/${layerUUID}`)
+                xhr.send();
+            },
+
+            hideMaster : function(ipAddr, port){
+                console.log("hideMaster: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/hide/workspace`)
+                xhr.send();
+            },
+
+            hideLayer : function(ipAddr, port, layerUUID){
+                console.log("unmuteLayer: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/hide/layer/${layerUUID}`)
+                xhr.send();
+            },
+
+            unhideMaster : function(ipAddr, port){
+                console.log("unhideMaster: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/unhide/workspace`)
+                xhr.send();
+            },
+
+            unhideLayer : function(ipAddr, port, layerUUID){
+                console.log("unhideLayer: sending request")
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", `http://${ipAddr}:${port}/api/0/unhide/layer/${layerUUID}`)
+                xhr.send();
+            }
+        }
+
+        //Entry point for plugin from stream deck
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo){
+            console.log("connectElgatoStreamDeckSocket function called.");
+                       
+            websocket = new WebSocket("ws://127.0.0.1:" + inPort)
+            ws = websocket;
+            
+            //Websocket is connected. Register the plugin with stream deck software.
+            websocket.onopen = function() {
+                json = {
+                    "event": inRegisterEvent,
+                    "uuid": inPluginUUID
+                };
+                
+                //Set plugin context
+                Utilities.setPluginContext(inPluginUUID);
+
+                //Register plugin with streamdeck software
+                websocket.send(JSON.stringify(json));
+            }
+            
+            //any events received from the stream deck software will run through this function
+            websocket.onmessage = function(event) {
+                let data = JSON.parse(event.data);
+                let context = data.context;
+
+                switch(data.event){
+                    case "keyDown":
+                        receivedEvents.keyDown(context=data.context,
+                        settings=data.payload.settings,
+                        coordinates=data.payload.coordinates);
+                        break;
+
+                    case "keyUp":
+                        receivedEvents.keyUp(
+                        context=data.context,
+                        settings=data.payload.settings,
+                        coordinates=data.payload.coordinates,
+                        action=data.action,
+                        payload=data.payload);
+                        break;
+
+                    case "willAppear":
+                        receivedEvents.willAppear(context=data.context,
+                        settings=data.payload.settings,
+                        coordinates=data.payload.coordinates);
+                        break;
+                    
+                    case "didReceiveGlobalSettings": //this is handled by the request function
+                        receivedEvents.didReceiveGlobalSettings(
+                                settings=data.payload.settings)
+                        break;
+
+                    default:
+                        console.log("Received unknown event: "+ data.event);
+                }
+            }
+        }
+        
+    </script>
+
+</body>
+
+</html>

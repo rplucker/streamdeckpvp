@@ -1,0 +1,194 @@
+{
+  "Actions": [
+    {
+      "Icon": "images/triggerCue_action", 
+      "Name": "Trigger Cue", 
+      "States": [
+        {
+          "Image": "images/triggerCue_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Trigger a specific cue", 
+      "UUID": "com.github.rplucker.streamdeckpvp.triggercue",
+      "PropertyInspectorPath": "PropertyInspectors/TriggerCue.html"
+    },
+    {
+      "Icon": "images/clearAll_action", 
+      "Name": "Clear All", 
+      "States": [
+        {
+          "Image": "images/clearAll_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Clear the entire workspace", 
+      "UUID": "com.github.rplucker.streamdeckpvp.clearall",
+      "PropertyInspectorPath": "PropertyInspectors/ClearAll.html"
+    },
+    {
+      "Icon": "images/clearLayer_action", 
+      "Name": "Clear Layer", 
+      "States": [
+        {
+          "Image": "images/clearLayer_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Clear a specific layer", 
+      "UUID": "com.github.rplucker.streamdeckpvp.clearlayer",
+      "PropertyInspectorPath": "PropertyInspectors/ClearLayer.html"
+    },
+    {
+      "Icon": "images/muteMaster_action", 
+      "Name": "Mute Master", 
+      "States": [
+        {
+          "Image": "images/muteMaster_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Mute the master output", 
+      "UUID": "com.github.rplucker.streamdeckpvp.mutemaster",
+      "PropertyInspectorPath": "PropertyInspectors/MuteMaster.html"
+    },
+    {
+      "Icon": "images/muteLayer_action", 
+      "Name": "Mute Layer", 
+      "States": [
+        {
+          "Image": "images/muteLayer_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Mute a specific layer", 
+      "UUID": "com.github.rplucker.streamdeckpvp.mutelayer",
+      "PropertyInspectorPath": "PropertyInspectors/MuteLayer.html"
+    },
+    {
+      "Icon": "images/unmuteMaster_action", 
+      "Name": "Unmute Master", 
+      "States": [
+        {
+          "Image": "images/unmuteMaster_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Unmute the master output", 
+      "UUID": "com.github.rplucker.streamdeckpvp.unmutemaster",
+      "PropertyInspectorPath": "PropertyInspectors/UnmuteMaster.html"
+    },
+    {
+      "Icon": "images/unmuteLayer_action", 
+      "Name": "Unmute Layer", 
+      "States": [
+        {
+          "Image": "images/unmuteLayer_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Unmute a specific layer", 
+      "UUID": "com.github.rplucker.streamdeckpvp.unmutelayer",
+      "PropertyInspectorPath": "PropertyInspectors/UnmuteLayer.html"
+    },
+    {
+      "Icon": "images/hideMaster_action", 
+      "Name": "Hide Master", 
+      "States": [
+        {
+          "Image": "images/hideMaster_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Hide the master output", 
+      "UUID": "com.github.rplucker.streamdeckpvp.hidemaster",
+      "PropertyInspectorPath": "PropertyInspectors/HideMaster.html"
+    },
+    {
+      "Icon": "images/hideLayer_action", 
+      "Name": "Hide Layer", 
+      "States": [
+        {
+          "Image": "images/hideLayer_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Hide a specific layer", 
+      "UUID": "com.github.rplucker.streamdeckpvp.hidelayer",
+      "PropertyInspectorPath": "PropertyInspectors/HideLayer.html"
+    },
+    {
+      "Icon": "images/unhideMaster_action", 
+      "Name": "Unhide Master", 
+      "States": [
+        {
+          "Image": "images/unhideMaster_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Unhide the master output", 
+      "UUID": "com.github.rplucker.streamdeckpvp.unhidemaster",
+      "PropertyInspectorPath": "PropertyInspectors/UnhideMaster.html"
+    },
+    {
+      "Icon": "images/unhideLayer_action", 
+      "Name": "Unhide Layer", 
+      "States": [
+        {
+          "Image": "images/unhideLayer_key",
+          "TitleAlignment": "middle", 
+          "FontSize": "12"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "Unhide a specific layer", 
+      "UUID": "com.github.rplucker.streamdeckpvp.unhidelayer",
+      "PropertyInspectorPath": "PropertyInspectors/UnhideLayer.html"
+    }
+  ], 
+
+  "SDKVersion": 2,
+  "Author": "rp", 
+  "CodePath": "main.html", 
+  "Description": "PVP functionality.", 
+  "Name": "PVP", 
+  "Icon": "images/category", 
+  "URL": "google.com", 
+  "Version": "1.0",
+  "Category": "PVP",
+  "CategoryIcon": "images/category",
+  "OS": [
+    {
+        "Platform": "mac", 
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows", 
+        "MinimumVersion" : "10"
+    }
+  ],
+  "Software": 
+    {
+        "MinimumVersion" : "4.1"
+    }
+}
