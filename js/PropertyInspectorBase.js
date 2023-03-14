@@ -194,7 +194,7 @@ var sendToElgatoEvents = {
 
         sendToPlugin: function(what){
             json = {
-                    "action": "com.github.rplucker.streamdeckpvp.triggercue",
+                    "action": "com.richardplucker.pvp.triggercue",
                     "event": "sendToPlugin",
                     "context": propertyInspectorContext,
                     "payload": {"sendToPlugin": "TestPayload"}
