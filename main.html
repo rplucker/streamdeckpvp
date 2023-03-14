@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>com.github.rplucker.streamdeckpvp</title>
+	<title>com.richardplucker.pvp</title>
     <meta charset="utf-8" />
 </head>
 
@@ -54,54 +54,54 @@
                 }
                 console.log(action);
                 switch(action){
-                    case "com.github.rplucker.streamdeckpvp.triggercue":
+                    case "com.richardplucker.pvp.triggercue":
                         playlistUUID = settings.cueDropdownSelected.split("_")[0];
                         cueUUID = settings.cueDropdownSelected.split("_")[1];
 
                         PVP.triggerCueByUUID(ipAddr = ipAddr, port = portNumber, playlistUUID = playlistUUID, cueUUID = cueUUID);
                         break;
 
-                    case "com.github.rplucker.streamdeckpvp.clearall":
+                    case "com.richardplucker.pvp.clearall":
                         PVP.clearAll(ipAddr = ipAddr, port = portNumber);
                         break;
 
-                    case "com.github.rplucker.streamdeckpvp.clearlayer":
+                    case "com.richardplucker.pvp.clearlayer":
                         layerUUID = settings.layerDropdownSelected
                         PVP.clearLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.mutemaster":
+                    case "com.richardplucker.pvp.mutemaster":
                         PVP.muteMaster(ipAddr=ipAddr, port=portNumber);
                         break;
 
-                    case "com.github.rplucker.streamdeckpvp.mutelayer":
+                    case "com.richardplucker.pvp.mutelayer":
                         layerUUID = settings.layerDropdownSelected
                         PVP.muteLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.unmutemaster":
+                    case "com.richardplucker.pvp.unmutemaster":
                         PVP.ummuteMaster(ipAddr=ipAddr, port=portNumber)
                         break;
 
-                    case "com.github.rplucker.streamdeckpvp.unmutelayer":
+                    case "com.richardplucker.pvp.unmutelayer":
                         layerUUID = settings.layerDropdownSelected
                         PVP.unmuteLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.hidemaster":
+                    case "com.richardplucker.pvp.hidemaster":
                         PVP.hideMaster(ipAddr=ipAddr, port=portNumber);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.hidelayer":
+                    case "com.richardplucker.pvp.hidelayer":
                         layerUUID = settings.layerDropdownSelected
                         PVP.hideLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.unhidemaster":
+                    case "com.richardplucker.pvp.unhidemaster":
                         PVP.unhideMaster(ipAddr=ipAddr, port=portNumber);
                         break;
                     
-                    case "com.github.rplucker.streamdeckpvp.unhidelayer":
+                    case "com.richardplucker.pvp.unhidelayer":
                         layerUUID = settings.layerDropdownSelected
                         PVP.unhideLayer(ipAddr=ipAddr, port=portNumber, layerUUID=layerUUID)
                         break;
