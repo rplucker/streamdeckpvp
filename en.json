@@ -1,9 +1,0 @@
-{
-    "Description": "PVP functionality.", 
-    "Name": "Trigger a Cue", 
-    "com.rp.pvp.activatecue": {
-      "Name": "Trigger Cue", 
-      "Tooltip": "Trigger a cue that lives in a playlist."
-    }
-  }
-  
