@@ -12,7 +12,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Trigger a specific cue", 
-      "UUID": "com.github.rplucker.streamdeckpvp.triggercue",
+      "UUID": "com.richardplucker.pvp.triggercue",
       "PropertyInspectorPath": "PropertyInspectors/TriggerCue.html"
     },
     {
@@ -27,7 +27,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Clear the entire workspace", 
-      "UUID": "com.github.rplucker.streamdeckpvp.clearall",
+      "UUID": "com.richardplucker.pvp.clearall",
       "PropertyInspectorPath": "PropertyInspectors/ClearAll.html"
     },
     {
@@ -42,7 +42,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Clear a specific layer", 
-      "UUID": "com.github.rplucker.streamdeckpvp.clearlayer",
+      "UUID": "com.richardplucker.pvp.clearlayer",
       "PropertyInspectorPath": "PropertyInspectors/ClearLayer.html"
     },
     {
@@ -57,7 +57,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Mute the master output", 
-      "UUID": "com.github.rplucker.streamdeckpvp.mutemaster",
+      "UUID": "com.richardplucker.pvp.mutemaster",
       "PropertyInspectorPath": "PropertyInspectors/MuteMaster.html"
     },
     {
@@ -72,7 +72,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Mute a specific layer", 
-      "UUID": "com.github.rplucker.streamdeckpvp.mutelayer",
+      "UUID": "com.richardplucker.pvp.mutelayer",
       "PropertyInspectorPath": "PropertyInspectors/MuteLayer.html"
     },
     {
@@ -87,7 +87,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Unmute the master output", 
-      "UUID": "com.github.rplucker.streamdeckpvp.unmutemaster",
+      "UUID": "com.richardplucker.pvp.unmutemaster",
       "PropertyInspectorPath": "PropertyInspectors/UnmuteMaster.html"
     },
     {
@@ -102,7 +102,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Unmute a specific layer", 
-      "UUID": "com.github.rplucker.streamdeckpvp.unmutelayer",
+      "UUID": "com.richardplucker.pvp.unmutelayer",
       "PropertyInspectorPath": "PropertyInspectors/UnmuteLayer.html"
     },
     {
@@ -117,7 +117,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Hide the master output", 
-      "UUID": "com.github.rplucker.streamdeckpvp.hidemaster",
+      "UUID": "com.richardplucker.pvp.hidemaster",
       "PropertyInspectorPath": "PropertyInspectors/HideMaster.html"
     },
     {
@@ -132,7 +132,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Hide a specific layer", 
-      "UUID": "com.github.rplucker.streamdeckpvp.hidelayer",
+      "UUID": "com.richardplucker.pvp.hidelayer",
       "PropertyInspectorPath": "PropertyInspectors/HideLayer.html"
     },
     {
@@ -147,7 +147,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Unhide the master output", 
-      "UUID": "com.github.rplucker.streamdeckpvp.unhidemaster",
+      "UUID": "com.richardplucker.pvp.unhidemaster",
       "PropertyInspectorPath": "PropertyInspectors/UnhideMaster.html"
     },
     {
@@ -162,7 +162,7 @@
       ], 
       "SupportedInMultiActions": false,
       "Tooltip": "Unhide a specific layer", 
-      "UUID": "com.github.rplucker.streamdeckpvp.unhidelayer",
+      "UUID": "com.richardplucker.pvp.unhidelayer",
       "PropertyInspectorPath": "PropertyInspectors/UnhideLayer.html"
     }
   ], 
@@ -170,10 +170,10 @@
   "SDKVersion": 2,
   "Author": "rp", 
   "CodePath": "main.html", 
-  "Description": "PVP functionality.", 
+  "Description": "Control ProVideoPlayer from the Stream Deck. Trigger a specific cue, clear the workspace, mute/unmute layers & master, and more!", 
   "Name": "PVP", 
   "Icon": "images/category", 
-  "URL": "google.com", 
+  "URL": "https://github.com/rplucker/streamdeckpvp", 
   "Version": "1.0",
   "Category": "PVP",
   "CategoryIcon": "images/category",
